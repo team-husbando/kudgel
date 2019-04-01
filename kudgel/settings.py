@@ -25,7 +25,7 @@ SECRET_KEY = 'o)cybodj9*vh#j)@!25uf+g$j1pmzmwq(oewph1oqf*v!_$k04'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'kudgel.user',
+    'kudgel.shift',
+    'kudgel.project'
 ]
 
 MIDDLEWARE = [

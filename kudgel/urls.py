@@ -15,6 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from kudgel.user.models import Role, User
+from kudgel.shift.models import Shift
+from kudgel.project.models import Project
+
+admin.site.register(Project)
+admin.site.register(Role)
+admin.site.register(Shift)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
