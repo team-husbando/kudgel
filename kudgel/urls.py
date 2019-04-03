@@ -19,6 +19,10 @@ from kudgel.user.models import Role, User
 from kudgel.shift.models import Shift
 from kudgel.project.models import Project
 
+from kudgel.project.urls import urlpatterns as projecturls
+from kudgel.shift.urls import urlpatterns as shifturls
+from kudgel.user.urls import urlpatterns as userurls
+
 admin.site.register(Project)
 admin.site.register(Role)
 admin.site.register(Shift)
@@ -27,3 +31,7 @@ admin.site.register(Shift)
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns += projecturls
+urlpatterns += shifturls
+urlpatterns += userurls
