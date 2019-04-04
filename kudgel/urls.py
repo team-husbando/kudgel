@@ -14,8 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.urls import path, include
+
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework import routers
 
 from kudgel.project.models import Role, Project
 from kudgel.shift.models import Shift
@@ -24,14 +26,24 @@ from kudgel.project.urls import urlpatterns as project_urls
 from kudgel.shift.urls import urlpatterns as shift_urls
 from kudgel.user.urls import urlpatterns as user_urls
 
+from kudgel.project.views import ProjectViewSet
+from kudgel.shift.views import ShiftViewSet
+from kudgel.user.views import UserViewSet
+
 admin.site.register(Project)
 admin.site.register(Role)
 admin.site.register(Shift)
 
+router = routers.DefaultRouter()
+router.register(r'Project', ProjectViewSet)
+router.register(r'Shift', ShiftViewSet)
+router.register(r'User', UserViewSet)
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
+    path('api/auth/', obtain_auth_token, name='api_token_auth'),
+    path('api/', include(router.urls)),
 ]
 
 urlpatterns += project_urls
