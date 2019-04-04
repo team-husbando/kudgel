@@ -126,9 +126,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Django Auth redirect
+# Django Auth redirects
 
 LOGIN_URL = '/accounts/login'
+LOGIN_REDIRECT_URL = '/'
 
 # Django Rest Framework
 # https://www.django-rest-framework.org/api-guide/authentication/
