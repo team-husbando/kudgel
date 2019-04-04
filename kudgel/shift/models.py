@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
-from kudgel.user.models import Role
+from kudgel.user.models import User
+from kudgel.project.models import Role
 from kudgel.project.models import Project
 
 
