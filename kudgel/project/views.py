@@ -19,6 +19,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 class RoleFormView(LoginRequiredMixin, CreateView):
     model = Role
-    template_url = 'generic.form.html'
+    template_url = 'role_form.html'
     form_class = RoleForm
     sucess_url = reverse_lazy('success')
