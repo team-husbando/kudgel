@@ -14,14 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from kudgel.user.models import Role, User
-from kudgel.shift.models import Shift
-from kudgel.project.models import Project
+from django.contrib.auth import views as auth_views
+from django.urls import path, include
 
-from kudgel.project.urls import urlpatterns as projecturls
-from kudgel.shift.urls import urlpatterns as shifturls
-from kudgel.user.urls import urlpatterns as userurls
+from kudgel.project.models import Role, Project
+from kudgel.shift.models import Shift
+
+from kudgel.project.urls import urlpatterns as project_urls
+from kudgel.shift.urls import urlpatterns as shift_urls
+from kudgel.user.urls import urlpatterns as user_urls
 
 admin.site.register(Project)
 admin.site.register(Role)
@@ -29,9 +30,10 @@ admin.site.register(Shift)
 
 
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ]
 
-urlpatterns += projecturls
-urlpatterns += shifturls
-urlpatterns += userurls
+urlpatterns += project_urls
+urlpatterns += shift_urls
+urlpatterns += user_urls
