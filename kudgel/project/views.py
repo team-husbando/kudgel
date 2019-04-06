@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
-from django.shortcuts import render
 from django.urls import reverse_lazy
 
 from rest_framework import viewsets
@@ -19,6 +18,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
 class RoleFormView(LoginRequiredMixin, CreateView):
     model = Role
-    template_url = 'role_form.html'
+    template_url = 'generic/form.html'
     form_class = RoleForm
     sucess_url = reverse_lazy('success')
