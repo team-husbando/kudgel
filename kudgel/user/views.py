@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 from django.urls import reverse_lazy
 
 from rest_framework import viewsets
@@ -11,6 +11,10 @@ from kudgel.user.serializers import UserSerializer
 # Create your views here.
 
 
+class HomeView(TemplateView):
+    template_name = 'home.html'
+
+
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
@@ -20,4 +24,4 @@ class UserViewSet(viewsets.ModelViewSet):
 class CreateUserView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('home')
-    template_name = 'generic.form.html'
+    template_name = 'generic/form.html'
