@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
+from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import render
 
@@ -40,3 +41,11 @@ class ShiftFormView(LoginRequiredMixin, View):
             return render(request, self.template_name, {
                 'form': self.form_class})
         return reverse_lazy('success')
+
+class ShiftDetailView(DetailView):
+
+    model = Shift
+
+    def get_object(self, queryset=None):
+        return Shift.objects.get(id=self.kwargs.get('slug'))
+
