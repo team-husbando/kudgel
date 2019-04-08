@@ -32,7 +32,10 @@ class ShiftFormView(LoginRequiredMixin, View):
         form = self.form_class(request)
         if form.is_valid():
             data = form.cleaned_data
-            Shift.objects.create(data)
+            Shift.objects.create(
+                name=data['name'],
+                start_time=data['start_time'],
+                end_time=data['end_time'],)
         else:
             return render(request, self.template_name, {
                 'form': self.form_class})
