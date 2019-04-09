@@ -1,0 +1,10 @@
+<h1>Shift List</h1>
+<ul>
+{% for shift in object_list %}
+    <li>{{ shift.name }}</li>
+    <li>{{ shift.start_time }}</li>
+    <li>{{ shift.end_time }}</li>
+{% empty %}
+    <li>No articles yet.</li>
+{% endfor %}
+</ul>
