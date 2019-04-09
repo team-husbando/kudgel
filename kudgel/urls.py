@@ -35,9 +35,9 @@ admin.site.register(Role)
 admin.site.register(Shift)
 
 router = routers.DefaultRouter()
-router.register(r'Project', ProjectViewSet)
-router.register(r'Shift', ShiftViewSet)
-router.register(r'User', UserViewSet)
+router.register(r'project', ProjectViewSet)
+router.register(r'shift', ShiftViewSet)
+router.register(r'user', UserViewSet)
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
