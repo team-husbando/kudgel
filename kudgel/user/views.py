@@ -21,7 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class CreateUserView(CreateView):
     form_class = UserCreationForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('splash')
     template_name = 'generic/form.html'
 
 

@@ -7,6 +7,6 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('landing/', SplashView.as_view(), name='splash'),
     path('role/', RoleFormView.as_view(), name='create_role'),
-    path('project/', ProjectFormView.as_view(), name='create_project'),
-    path('project/<int:id>', ProjectDetailView.as_view(), name='a_project'),
+    path('project/new', ProjectFormView.as_view(), name='create_project'),
+    path('project/<int:_id>', ProjectDetailView.as_view(), name='a_project'),
 ]

@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
+from kudgel.shift.models import Shift
 from kudgel.project.models import Project, Role
 from kudgel.project.serializers import ProjectSerializer, RoleSerializer
 from kudgel.project.forms import RoleForm, ProjectForm
@@ -61,3 +62,14 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     model = Project
     form_class = ProjectForm
     success_url = reverse_lazy('home')
+    pk_url_kwarg = '_id'
+
+    def get(self, request, _id, *args, **kwargs):
+        request.session.update(
+            {'project_id': _id})
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        context.update(
+            {'object_list': Shift.objects.filter(project__id=_id)})
+        return self.render_to_response(context)
+
