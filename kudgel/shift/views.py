@@ -23,7 +23,7 @@ class ShiftViewSet(viewsets.ModelViewSet):
 
 class ShiftFormView(LoginRequiredMixin, View):
     model = Shift
-    template_name = 'generic/form.html'
+    template_name = 'shift/shift_create.html'
     form_class = ShiftForm
     sucess_url = reverse_lazy('success')
 
