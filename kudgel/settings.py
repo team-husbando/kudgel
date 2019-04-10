@@ -130,8 +130,8 @@ STATIC_URL = '/static/'
 
 # Django Auth redirects
 
-LOGIN_URL = '/accounts/login'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/landing/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Django Rest Framework

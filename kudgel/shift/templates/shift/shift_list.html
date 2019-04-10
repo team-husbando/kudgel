@@ -1,10 +1,15 @@
 <h1>Shift List</h1>
 <ul>
 {% for shift in object_list %}
-    <li>{{ shift.name }}</li>
-    <li>{{ shift.start_time }}</li>
-    <li>{{ shift.end_time }}</li>
+  <a href="#" class="list-group-item list-group-item-action active">
+    <div class="d-flex w-100 justify-content-between">
+		<h5 class="mb-1">{{ shift.name }}</h5>
+      	<small>3 days ago</small>
+    </div>
+	<p class="mb-1">{{ shift.description }}</p>
+	<small>Assigned by {{ shift.user }}</small>
+  </a>
 {% empty %}
-    <li>No articles yet.</li>
+    <li>No shifts yet.</li>
 {% endfor %}
 </ul>

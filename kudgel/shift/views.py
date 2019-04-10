@@ -43,6 +43,7 @@ class ShiftFormView(LoginRequiredMixin, View):
                 'form': self.form_class})
         return reverse_lazy('success')
 
+
 class ShiftDetailView(DetailView):
 
     model = Shift
@@ -50,7 +51,9 @@ class ShiftDetailView(DetailView):
     def get_object(self, queryset=None):
         return Shift.objects.get(id=self.kwargs.get('slug'))
 
+
 class ShiftListView(ListView):
+
     model = Shift
 
     def get_context_data(self, **kwargs):

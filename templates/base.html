@@ -13,6 +13,9 @@
 			<span class="navbar-brand mb-0 h1">
 				Kudgel
 			</span>
+			<span class="navbar-brand mb-0 h1">
+				{{ project }}
+			</span>
 			{% if user.is_authenticated %}
 			<a href='/accounts/logout/'><button class="btn btn-outline-secondary my-2 my-sm-0" type="button">Logout</button></a>
 			{% else %}
@@ -25,8 +28,7 @@
 		<div class="container-fluid">
 			<div class="navbar bavbar-light bg-light">
 				<span>
-				{% if user.is_authenticated %}
-					<a href='/project/'><span class='navbar-brand mb-0 h1'>Projects</span></a>
+				{% if user.is_authenticated and project %}
 					<a href='/shift/'><span class='navbar-brand mb-0 h1'>Shifts</span></a>
 					<a href='/user/'><span class='navbar-brand mb-0 h1'>Team</span></a>
 				{% else %}
