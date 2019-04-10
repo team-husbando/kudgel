@@ -14,7 +14,7 @@ class GetCalendar(HTMLCalendar):
         """
         Return a day as a table cell.
         """
-        events_from_day = events.filter(day__day=day)
+        events_from_day = events.filter(date__day=day)
         events_html = "<ul>"
         for event in events_from_day:
             events_html += event.get_absolute_url() + "<br>"
@@ -30,7 +30,7 @@ class GetCalendar(HTMLCalendar):
         Return a complete week as a table row.
         """
         s = ''.join(self.formatday(d, wd, events) for (d, wd) in theweek)
-        return '<tr>%s</tr>' % s
+        return '<tr scope="row">%s</tr>' % s
 
     def formatmonth(self, theyear, themonth, withyear=True):
         """
@@ -41,7 +41,7 @@ class GetCalendar(HTMLCalendar):
 
         v = []
         a = v.append
-        a('<table border="0" cellpadding="0" cellspacing="0" class="month">')
+        a('<table class="table table-striped" border="0" cellpadding="0" cellspacing="0" class="month">')
         a('\n')
         a(self.formatmonthname(theyear, themonth, withyear=withyear))
         a('\n')

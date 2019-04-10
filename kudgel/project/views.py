@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from django.urls import reverse_lazy
@@ -29,6 +31,16 @@ class HomeView(TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         context['project'] = request.session.get('project') or 'Welcome'
+        print(context)
+        if context.get('project_id'):
+            queryset = Shift.objects.filter(
+                project__id=context['project_id'],
+                date__gte=datetime.today()-timedelta(days=21),
+                date__lte=datetime.today()+timedelta(days=21),
+            )
+            print(queryset)
+            context.update({'object_list': queryset})
+
         return self.render_to_response(context)
 
 
@@ -71,5 +83,5 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
         context = self.get_context_data(object=self.object)
         context.update(
             {'object_list': Shift.objects.filter(project__id=_id)})
+        print(context)
         return self.render_to_response(context)
-

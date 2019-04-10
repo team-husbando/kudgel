@@ -1,9 +1,13 @@
 from django.urls import path
-from .views import ShiftFormView, ShiftDetailView, ShiftListView
+
+from kudgel.shift.views import ShiftFormView, ShiftDetailView, ShiftListView, ProjectShiftListView, ProjectShiftDetailView # noqa
 
 
 urlpatterns = [
-    path('shift/new/', ShiftFormView.as_view(), name='create_shift'),
-    path('shift/<slug:slug>/', ShiftDetailView.as_view(), name='shift-detail'),
-    path('shift/', ShiftListView.as_view(), name='shift-list')
+    path('project/<slug:p_id>/shift/new/',
+         ShiftFormView.as_view(), name='create_shift'),
+    path('project/<slug:p_id>/shift/<slug:s_id>/',
+         ProjectShiftDetailView.as_view(), name='p_shift_detail'),
+    path('project/<slug:p_id>/shift/',
+         ProjectShiftListView.as_view(), name='p_shift_list'),
 ]
