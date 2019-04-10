@@ -1,4 +1,5 @@
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView, TemplateView
 from django.urls import reverse_lazy
@@ -33,3 +34,11 @@ class UserDetailView(DetailView):
 
     def get_object(self, queryset=None):
         return User.objects.get(id=self.kwargs.get('slug'))
+
+class UserListView(ListView):
+    model = User
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+ 
