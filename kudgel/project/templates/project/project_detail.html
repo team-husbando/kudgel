@@ -8,7 +8,7 @@
 		</div>
 
 		{% for shift in object_list %}
-		<a href="/project/{{project.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+		<a href="/project/{{project.id}}/shift/{{shift.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
 			<div class="d-flex w-100 justify-content-between">
 				<h5 class="mb-1">{{ shift.role.title }}</h5>
 				<small class="text-muted">{{ shift.name }}</small>
