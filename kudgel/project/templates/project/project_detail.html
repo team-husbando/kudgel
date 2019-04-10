@@ -4,24 +4,23 @@
 <div class="col-4">
 	<div class="list-group" id="list-tab" role="tablist">
 		<div class="card-header">
-			Projects
+			Shifts
 		</div>
-		{% for project in object_list %}
 
+		{% for shift in object_list %}
 		<a href="/project/{{project.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
 			<div class="d-flex w-100 justify-content-between">
-				<h5 class="mb-1">{{ project.name }}</h5>
-				<small class="text-muted">Admin: {{ project.owner }}</small>
+				<h5 class="mb-1">{{ shift.role.title }}</h5>
+				<small class="text-muted">{{ shift.name }}</small>
 			</div>
-			<p class="mb-1">{{ project.description }}</p>
+			<p class="mb-1">{{ shift.description }}</p>
 			<small class="text-muted"></small>
 		</a>
-
 		{% empty %}
-		<a href="/project/new" class="list-group-item list-group-item-action flex-column align-items-start">
+		<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
 			<div class="d-flex w-100 justify-content-between">
-				<h5 class="mb-1">Create new Kudgel</h5>
-				<small class="text-muted">Admin: You</small>
+				<h5 class="mb-1">No Schedule</h5>
+				<small class="text-muted">You</small>
 			</div>
 			<p class="mb-1">Organize your teams schedule and collaborate!</p>
 			<small class="text-muted"></small>

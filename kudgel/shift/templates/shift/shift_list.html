@@ -1,15 +1,32 @@
-<h1>Shift List</h1>
-<ul>
-{% for shift in object_list %}
-  <a href="#" class="list-group-item list-group-item-action active">
-    <div class="d-flex w-100 justify-content-between">
-		<h5 class="mb-1">{{ shift.name }}</h5>
-      	<small>3 days ago</small>
-    </div>
-	<p class="mb-1">{{ shift.description }}</p>
-	<small>Assigned by {{ shift.user }}</small>
-  </a>
-{% empty %}
-    <li>No shifts yet.</li>
-{% endfor %}
-</ul>
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="col-4">
+	<div class="list-group" id="list-tab" role="tablist">
+		<div class="card-header">
+			shifts
+		</div>
+
+		{% for shift in object_list %}
+		<a href="/shift/{{shift.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">{{ shift.role.title }}</h5>
+				<small class="text-muted">{{ shift.name }}</small>
+			</div>
+			<p class="mb-1">{{ shift.description }}</p>
+			<small class="text-muted"></small>
+		</a>
+		{% empty %}
+		<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">No Schedule</h5>
+				<small class="text-muted">You</small>
+			</div>
+			<p class="mb-1">Organize your teams schedule and collaborate!</p>
+			<small class="text-muted"></small>
+		</a>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}
