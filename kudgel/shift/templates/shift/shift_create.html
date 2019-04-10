@@ -1,0 +1,15 @@
+<script type="text/javascript" src="/jsi18n/"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script
+  type="text/javascript"
+  src="/static/admin/js/admin/RelatedObjectLookups.js'"
+></script>
+
+{% extends 'base.html' %} {% block body %}
+<form action="{{ action_url }}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {{ form.media }}
+  <input type="submit" value="Submit" />
+</form>
+{% endblock %}
