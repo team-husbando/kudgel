@@ -13,10 +13,6 @@ from kudgel.user.serializers import UserSerializer
 # Create your views here.
 
 
-class HomeView(TemplateView):
-    template_name = 'home.html'
-
-
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
@@ -28,8 +24,8 @@ class CreateUserView(CreateView):
     success_url = reverse_lazy('home')
     template_name = 'generic/form.html'
 
-class UserDetailView(DetailView):
 
+class UserDetailView(DetailView):
     model = User
 
     def get_object(self, queryset=None):
