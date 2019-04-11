@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from kudgel.user.models import User
 from kudgel.user.serializers import UserSerializer
+from django.shortcuts import render_to_response
 
 # Create your views here.
 
@@ -38,3 +39,13 @@ class UserListView(ListView):
         context = super().get_context_data(**kwargs)
         return context
  
+def handler404(request, exception, template_name="404.html"):
+    response = render_to_response("404.html")
+    response.status_code = 404
+    return response
+
+
+def handler500(request, template_name="500.html"):
+    response = render_to_response("500.html")
+    response.status_code = 500
+    return response

@@ -30,6 +30,7 @@ from kudgel.project.views import ProjectViewSet
 from kudgel.shift.views import ShiftViewSet
 from kudgel.user.views import UserViewSet
 
+
 admin.site.register(Project)
 admin.site.register(Role)
 admin.site.register(Shift)
@@ -38,6 +39,9 @@ router = routers.DefaultRouter()
 router.register(r'project', ProjectViewSet)
 router.register(r'shift', ShiftViewSet)
 router.register(r'user', UserViewSet)
+
+handler404 = 'kudgel.user.views.handler404'
+handler500 = 'kudgel.user.views.handler500'
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
