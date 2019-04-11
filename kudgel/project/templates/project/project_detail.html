@@ -1,31 +1,49 @@
-{% extends 'base.html' %}
-
-{% block body %}
+{% extends 'base.html' %} {% block body %}
 <div class="col-4">
-	<div class="list-group" id="list-tab" role="tablist">
-		<div class="card-header">
-			Shifts
-		</div>
+  <div class="list-group" id="list-tab" role="tablist">
+    <div class="card-header">
+      Shifts
+    </div>
 
-		{% for shift in object_list %}
-		<a href="/project/{{project.id}}/shift/{{shift.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
-			<div class="d-flex w-100 justify-content-between">
-				<h5 class="mb-1">{{ shift.role.title }}</h5>
-				<small class="text-muted">{{ shift.name }}</small>
-			</div>
-			<p class="mb-1">{{ shift.description }}</p>
-			<small class="text-muted"></small>
-		</a>
-		{% empty %}
-		<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-			<div class="d-flex w-100 justify-content-between">
-				<h5 class="mb-1">No Schedule</h5>
-				<small class="text-muted">You</small>
-			</div>
-			<p class="mb-1">Organize your teams schedule and collaborate!</p>
-			<small class="text-muted"></small>
-		</a>
-		{% endfor %}
-	</div>
+    {% for shift in object_list %}
+    <a
+      href="/project/{{ project_obj.id }}/shift/{{ shift.id }}/"
+      class="list-group-item list-group-item-action flex-column align-items-start"
+    >
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ shift.role.title }}</h5>
+        <small class="text-muted">{{ shift.name }}</small>
+      </div>
+      <p class="mb-1">{{ shift.description }}</p>
+      <small class="text-muted"></small>
+    </a>
+    {% empty %}
+    <a
+      href="#"
+      class="list-group-item list-group-item-action flex-column align-items-start"
+    >
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">No Schedule</h5>
+        <small class="text-muted">You</small>
+      </div>
+      <p class="mb-1">Organize your teams schedule and collaborate!</p>
+      <small class="text-muted"></small>
+    </a>
+    {% endfor %}
+    {{ project_obj }}
+    {% if project_obj and project_obj.owner.id == user.id %}
+    <a
+      href="/project/{{ project_obj.id }}/shift/"
+      class="list-group-item list-group-item-action flex-column align-items-start"
+    >
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">Add Shift to Schedule</h5>
+        <small class="text-muted">You</small>
+      </div>
+      <p class="mb-1">Organize your teams schedule and collaborate!</p>
+      <small class="text-muted"></small>
+    </a>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
