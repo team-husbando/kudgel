@@ -30,10 +30,10 @@ class ShiftFormView(LoginRequiredMixin, View):
     form_class = ShiftForm
     sucess_url = reverse_lazy('success')
 
-    def get(self, request):
+    def get(self, request, p_id):
         return render(request, self.template_name, {'form': self.form_class})
 
-    def post(self, request):
+    def post(self, request, p_id):
         form = self.form_class(request)
         if form.is_valid():
             data = form.cleaned_data

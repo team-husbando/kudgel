@@ -7,7 +7,7 @@
 			Projects
 		</div>
 		{% for project in object_list %}
-		<a href="/project/{{project.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+		<a href="/project/{{project.id}}/" class="list-group-item list-group-item-action flex-column align-items-start">
 			<div class="d-flex w-100 justify-content-between">
 				<h5 class="mb-1">{{ project.name }}</h5>
 				<small class="text-muted">Admin: {{ project.owner }}</small>
@@ -15,8 +15,8 @@
 			<p class="mb-1">{{ project.description }}</p>
 			<small class="text-muted"></small>
 		</a>
-		{% empty %}
-		<a href="/project/new" class="list-group-item list-group-item-action flex-column align-items-start">
+		{% endfor %}
+		<a href="/project/" class="list-group-item list-group-item-action flex-column align-items-start">
 			<div class="d-flex w-100 justify-content-between">
 				<h5 class="mb-1">Create new Kudgel</h5>
 				<small class="text-muted">Admin: You</small>
@@ -24,7 +24,6 @@
 			<p class="mb-1">Organize your teams schedule and collaborate!</p>
 			<small class="text-muted"></small>
 		</a>
-		{% endfor %}
 	</div>
 </div>
 {% endblock %}

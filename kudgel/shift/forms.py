@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget
-from kudgel.shift.widgets import BootstrapDateTimePickerInput
+# from kudgel.shift.widgets import BootstrapDateTimePickerInput
 
 
 class ShiftForm(forms.Form):
@@ -10,7 +10,8 @@ class ShiftForm(forms.Form):
     all_day = forms.BooleanField()
     date = forms.DateField(widget=AdminDateWidget)
     start_time = forms.DateTimeField(
-        widget=BootstrapDateTimePickerInput, input_formats=['%d/%m/%Y %H:%M'])
+        widget=AdminTimeWidget)
 
     end_time = forms.DateTimeField(
-        widget=BootstrapDateTimePickerInput, input_formats=['%d/%m/%Y %H:%M'])
+        widget=AdminTimeWidget)
+        # BootstrapDateTimePickerInput, input_formats=['%d/%m/%Y %H:%M']

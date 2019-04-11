@@ -19,7 +19,7 @@ class SplashView(LoginRequiredMixin, ListView):
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.model.objects.filter(
-            owner=request.user, staff__id=request.user.id)
+            owner=request.user) | self.model.objects.filter(staff__id=request.user.id)
         context = self.get_context_data()
         return self.render_to_response(context)
 
@@ -31,16 +31,15 @@ class HomeView(TemplateView):
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         context['project'] = request.session.get('project') or 'Welcome'
-        print(context)
         if context.get('project_id'):
+            project_id = context.get('project_id')
             queryset = Shift.objects.filter(
-                project__id=context['project_id'],
+                project__id=context[project_id],
                 date__gte=datetime.today()-timedelta(days=21),
                 date__lte=datetime.today()+timedelta(days=21),
             )
-            print(queryset)
             context.update({'object_list': queryset})
-
+            context.update({'project_obj': Project.objects.get(project_id)})
         return self.render_to_response(context)
 
 
@@ -67,7 +66,7 @@ class ProjectFormView(LoginRequiredMixin, CreateView):
     model = Project
     template_name = 'generic/form.html'
     form_class = ProjectForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('')
 
 
 class ProjectDetailView(LoginRequiredMixin, DetailView):
