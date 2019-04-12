@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from django.forms.models import model_to_dict
 from django.utils.safestring import mark_safe
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, TemplateView, ListView, DetailView
@@ -26,25 +27,7 @@ class SplashView(LoginRequiredMixin, ListView):
                 staff__id=request.user.id)
         context = self.get_context_data()
         return self.render_to_response(context)
-
-
-class HomeView(TemplateView):
-    template_name = 'home.html'
-    extra_context = {}
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        if context.get('project_id'):
-            project_id = context.get('project_id')
-            queryset = Shift.objects.filter(
-                project__id=context[project_id],
-                date__gte=datetime.today()-timedelta(days=21),
-                date__lte=datetime.today()+timedelta(days=21),
-            )
-            context.update({'object_list': queryset})
-            context.update({'project_obj': Project.objects.get(project_id)})
-        return self.render_to_response(context)
-
+    
 
 class ProjectViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -85,6 +68,7 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
 
     def get(self, request, _id, *args, **kwargs):
         self.object = self.get_object()
+        request.session['project_id'] = self.object.id
 
         context = self.get_context_data(object=self.object, **kwargs)
         context.update(

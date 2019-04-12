@@ -12,9 +12,14 @@
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"
 		integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
-	<link rel="stylesheet" type="text/css" href="static/admin/css/forms.css" />
-	<link rel="stylesheet" type="text/css" href="static/admin/css/base.css" />
-	<link rel="stylesheet" type="text/css" href="static/admin/css/widgets.css" />
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css" />
+	<link rel="stylesheet" type="text/css" href="/static/bootstrap-timepicker.min.js" />
+	<script
+			  src="https://code.jquery.com/jquery-3.4.0.min.js"
+			  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+			  crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -45,7 +50,7 @@
 	<div class="navbar bavbar-light bg-light px-5 flex-row justify-content-between">
 		<span>
 			<a href='/project/{{project.id}}/shift/'><span class='navbar-brand mb-0 h1'>Shifts</span></a>
-			<a href='/project/{{project.id}}/team/'><span class='navbar-brand mb-0 h1'>Team</span></a>
+			<a href='/project/{{project.id}}/staff/'><span class='navbar-brand mb-0 h1'>Staff</span></a>
 		</span>
 		<span>
 			<a href='/project/{{project.id}}/update/'><span class='navbar-brand mb-0 h1'>Project Settings</span></a>
@@ -53,13 +58,10 @@
 	</div>
 	{% else %}
 	{% endif %}
-	<div class="container-fluid" style=''>
+	<div class="container-fluid mt-4" style=''>
 		{% block body %}
 		{% endblock %}
 	</div>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
 		crossorigin="anonymous"></script>

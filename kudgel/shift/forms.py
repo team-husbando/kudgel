@@ -1,17 +1,17 @@
-from django import forms
+from django.forms import ModelForm
+from django.forms import TextInput
 from django.contrib.admin.widgets import AdminDateWidget, AdminTimeWidget
-# from kudgel.shift.widgets import BootstrapDateTimePickerInput
+
+from kudgel.shift.models import Shift
 
 
-class ShiftForm(forms.Form):
-
-    name = forms.CharField(max_length=50)
-    description = forms.CharField()
-    all_day = forms.BooleanField()
-    date = forms.DateField(widget=AdminDateWidget)
-    start_time = forms.DateTimeField(
-        widget=AdminTimeWidget)
-
-    end_time = forms.DateTimeField(
-        widget=AdminTimeWidget)
-        # BootstrapDateTimePickerInput, input_formats=['%d/%m/%Y %H:%M']
+class ShiftForm(ModelForm):
+    class Meta:
+        model = Shift
+        exclude = ('project','all_day')
+        widgets = {
+            'start': TextInput(attrs={'id': 'start',
+                'class':'form-control input-small'}),
+            'end': TextInput(attrs={'id': 'end',
+                'class':'form-control input-small'}),
+        }

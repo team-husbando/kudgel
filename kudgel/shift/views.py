@@ -1,8 +1,6 @@
 from datetime import datetime, timedelta
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
+from django.views.generic import CreateView, DetailView, ListView
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
@@ -10,6 +8,8 @@ from django.utils.safestring import mark_safe
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
+from kudgel.project.forms import RoleForm
+from kudgel.user.forms import UserForm
 from kudgel.shift.helpers import GetCalendar
 from kudgel.shift.models import Shift
 from kudgel.shift.forms import ShiftForm
@@ -24,18 +24,19 @@ class ShiftViewSet(viewsets.ModelViewSet):
     serializer_class = ShiftSerializer
 
 
-class ShiftFormView(LoginRequiredMixin, View):
+class ShiftFormView(LoginRequiredMixin, CreateView):
     model = Shift
-    template_name = 'shift/shift_create.html'
     form_class = ShiftForm
+    extra_context = { 'u_form': UserForm, 'r_form': RoleForm }
     sucess_url = reverse_lazy('success')
 
-    def get(self, request, p_id):
-        return render(request, self.template_name, {'form': self.form_class})
+    # def get(self, request, p_id):
+    #     return render(request, self.template_name, {'form': self.form_class})
 
     def post(self, request, p_id):
         form = self.form_class(request)
         if form.is_valid():
+            form.project = p_id
             data = form.cleaned_data
             Shift.objects.create(
                 name=data['name'],

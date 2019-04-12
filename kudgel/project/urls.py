@@ -5,7 +5,7 @@ from kudgel.project.views import RoleFormView, ProjectFormView, ProjectDetailVie
 
 urlpatterns = [
     path('', SplashView.as_view(), name='home'),
-    # path('role/', RoleFormView.as_view(), name='create_role'),
+    path('role/', RoleFormView.as_view(), name='create_role'),
     path('project/', ProjectFormView.as_view(), name='create_project'),
-    path('project/<int:_id>/', ProjectDetailView.as_view(), name='a_project'),
+    path('project/<int:_id>/', ProjectDetailView.as_view(), name='project'),
 ]

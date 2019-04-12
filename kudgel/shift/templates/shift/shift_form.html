@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="d-flex flex-row justify-content-between mx-4 pt-4">
+
+  <div class="card col mx-4">
+    <div class="form">
+      <div class="form-group">
+        <p class="h2">Create Shift</p>
+        <form endpoint="/project/{{request.session.project_id}}/shift/" id="shift"></form>
+
+
+        {{ form }}
+        <div class="input-group bootstrap-timepicker timepicker pull-right">
+          {{form.start}}
+        </div>
+        <div class="input-group bootstrap-timepicker timepicker pull-right">
+          {{form.end}}
+        </div>
+
+        <button type="submit">submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card col mx-2">
+    <div class="form">
+      <div class="form-group">
+        <p class="h2">Invite User</p>
+        <form endpoint="/project/{{request.session.project_id}}/staff/" id="user">
+          {{ u_form }}
+          <button type="submit">submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card col mx-4">
+    <div class="form">
+      <div class="form-group">
+        <p class="h2">Add Role</p>
+        <form endpoint="/role/" id="role">
+          {{ r_form }}
+          <!-- <input type="hidden" name="project_id" value={{request.session.project_id}}> -->
+          <button type="submit">submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script type='text/javascript'>
+  /* attach a submit handler to the form */
+  $("form").submit(function (event) {
+    event.preventDefault();
+    const csrf_token = '{{ csrf_token }}';
+    $.ajaxSetup({
+      headers: {
+        'X-CSRFToken': csrf_token,
+      }
+    });
+
+    /* get the action attribute from the <form action=""> element */
+    const $form = $(this);
+    const url = $form.attr('endpoint');
+
+    const unindexed_array = $form.serializeArray();
+    const indexed_array = {};
+
+    $.map(unindexed_array, function (n, i) {
+      indexed_array[n['name']] = n['value'];
+    });
+
+    console.log(indexed_array);
+    /* Send the data using post with element id name and name2*/
+    const posting = $.ajax({
+      type: 'POST',
+      url: url,
+      dataType: 'application/json',
+      data: indexed_array,
+    });
+
+    /* Alerts the results */
+    posting.done(function (data) {
+      alert('success');
+    });
+  });
+
+  $('#start').timepicker({
+    minuteStep: 5,
+    showInputs: false,
+    disableFocus: true
+  });
+
+  $('#end').timepicker({
+    minuteStep: 5,
+    showInputs: false,
+    disableFocus: true
+  });
+</script>
+{% endblock %}
