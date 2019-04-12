@@ -7,7 +7,7 @@ class RoleForm(forms.ModelForm):
 
     class Meta:
         model = Role
-        fields = ['title']
+        fields = '__all__'
 
 
 class ProjectForm(forms.ModelForm):

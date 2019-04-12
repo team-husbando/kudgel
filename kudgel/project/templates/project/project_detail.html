@@ -23,7 +23,7 @@
 						</div>
 
 						{% for shift in object_list %}
-						<a href="/project/{{ project_obj.id }}/shift/{{ shift.id }}/"
+						<a href="/project/{{ project.id }}/shift/{{ shift.id }}/"
 							class="list-group-item list-group-item-action flex-column align-items-start">
 							<div class="d-flex w-100 justify-content-between">
 								<h5 class="mb-1">{{ shift.role.title }}</h5>
@@ -45,7 +45,7 @@
 						{% endfor %}
 
 						{% if project and project.owner.id == user.id %}
-						<a href="/project/{{ project_obj.id }}/shift/"
+						<a href="/project/{{ project.id }}/shift/"
 							class="list-group-item list-group-item-action flex-column align-items-start">
 							<div class="d-flex w-100 justify-content-between">
 								<h5 class="mb-1">Add Shift to Schedule</h5>
