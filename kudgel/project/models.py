@@ -16,6 +16,7 @@ class Project(models.Model):
 class Role(models.Model):
     title = models.CharField(max_length=50)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    description = models.TextField(null=True,blank=True)
 
     def __str__(self):
         return self.title

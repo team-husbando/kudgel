@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 
+from django.forms.models import model_to_dict
+from django.utils.safestring import mark_safe
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, TemplateView, ListView, DetailView
 from django.urls import reverse_lazy
@@ -7,6 +9,7 @@ from django.urls import reverse_lazy
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
+from kudgel.shift.helpers import GetCalendar
 from kudgel.shift.models import Shift
 from kudgel.project.models import Project, Role
 from kudgel.project.serializers import ProjectSerializer, RoleSerializer
@@ -16,32 +19,15 @@ from kudgel.project.forms import RoleForm, ProjectForm
 class SplashView(LoginRequiredMixin, ListView):
     template_name = 'choose_project.html'
     model = Project
+    extra_context = {'welcome': 'welcome'}
 
     def get(self, request, *args, **kwargs):
         self.object_list = self.model.objects.filter(
-            owner=request.user) | self.model.objects.filter(staff__id=request.user.id)
+            owner=request.user) | self.model.objects.filter(
+                staff__id=request.user.id)
         context = self.get_context_data()
         return self.render_to_response(context)
-
-
-class HomeView(TemplateView):
-    template_name = 'home.html'
-    extra_context = {}
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context['project'] = request.session.get('project') or 'Welcome'
-        if context.get('project_id'):
-            project_id = context.get('project_id')
-            queryset = Shift.objects.filter(
-                project__id=context[project_id],
-                date__gte=datetime.today()-timedelta(days=21),
-                date__lte=datetime.today()+timedelta(days=21),
-            )
-            context.update({'object_list': queryset})
-            context.update({'project_obj': Project.objects.get(project_id)})
-        return self.render_to_response(context)
-
+    
 
 class ProjectViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -66,7 +52,12 @@ class ProjectFormView(LoginRequiredMixin, CreateView):
     model = Project
     template_name = 'generic/form.html'
     form_class = ProjectForm
-    success_url = reverse_lazy('')
+
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        self.object = form.save()
+        self.success_url = '/project/{}/'.format(self.object.id)
+        return super().form_valid(form)
 
 
 class ProjectDetailView(LoginRequiredMixin, DetailView):
@@ -76,11 +67,25 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     pk_url_kwarg = '_id'
 
     def get(self, request, _id, *args, **kwargs):
-        request.session.update(
-            {'project_id': _id})
         self.object = self.get_object()
-        context = self.get_context_data(object=self.object)
+        request.session['project_id'] = self.object.id
+
+        context = self.get_context_data(object=self.object, **kwargs)
         context.update(
             {'object_list': Shift.objects.filter(project__id=_id)})
-        print(context)
+
+        # get shift in range of calendar
+        queryset = Shift.objects.filter(
+            project__id=self.object.id,
+            date__gte=datetime.today()-timedelta(days=21),
+            date__lte=datetime.today()+timedelta(days=21),
+        )
+        # update the context with shifts
+        context.update({'shift_list': queryset})
+
+        # create calendar
+        calendar = GetCalendar(queryset)
+        today = datetime.today()
+        html_cal = calendar.formatmonth(today.year, today.month)
+        context.update({'calendar': mark_safe(html_cal)})
         return self.render_to_response(context)
