@@ -1,5 +1,6 @@
-# kudgel
+# Kudgel
 Kudgel is a Django web app for scheduling teams.
+![Kudgel](https://i.imgur.com/86fxogN.png)
 
 ## Requirements
 - pipenv
